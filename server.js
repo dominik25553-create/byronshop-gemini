@@ -1,4 +1,3 @@
-// server.js
 import express from "express";
 import cors from "cors";
 import fetch from "node-fetch";
@@ -15,6 +14,7 @@ const productos = [
   { nombre: "Servicios Digitales", descripcion: "Servicios digitales para mejorar tu presencia online.", precio: 111.87, categoria: "Digital" }
 ];
 
+// Endpoint del asistente
 app.post("/api/asistente", async (req, res) => {
   const userMessage = req.body.message;
 
@@ -54,7 +54,8 @@ Responde con recomendaciones claras y concisas, siempre de forma profesional y c
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.use(express.static('public'));
-app.listen(PORT, () => console.log(`Servidor Gemini activo en puerto ${PORT}`));
+// 🔹 Exponer widget.js como recurso estático
+app.use(express.static(__dirname)); // ahora cualquier archivo en la raíz se puede acceder vía URL
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor Gemini activo en puerto ${PORT}`));
