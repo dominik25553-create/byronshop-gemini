@@ -18,6 +18,7 @@ const productos = [
 app.post("/api/asistente", async (req, res) => {
   const userMessage = req.body.message;
 
+  // Prompt para Gemini
   const systemPrompt = `
 Eres el Asistente de Compras profesional y corporativo de ByronShop.
 Tu función es recomendar paquetes de servicios según la necesidad, presupuesto y atributos del cliente.
@@ -30,6 +31,20 @@ Responde con recomendaciones claras y concisas, siempre de forma profesional y c
 `;
 
   try {
+    if (!process.env.GEMINI_API_KEY) {
+      // Respuesta de prueba si no hay API Key
+      let reply = "Aquí tienes algunas recomendaciones según tu necesidad: ";
+      if (userMessage.toLowerCase().includes("web")) {
+        reply += "Paquete Web Pro sería ideal para ti.";
+      } else if (userMessage.toLowerCase().includes("app")) {
+        reply += "Aplicaciones Innovadoras encajan con tu proyecto.";
+      } else {
+        reply += "Productos Digitales o Servicios Digitales podrían servirte.";
+      }
+      return res.json({ reply, used: "mock" });
+    }
+
+    // Llamada a Gemini si hay API Key
     const response = await fetch("https://generativeai.googleapis.com/v1beta2/models/gemini-1.5-pro:generateMessage", {
       method: "POST",
       headers: {
@@ -48,14 +63,15 @@ Responde con recomendaciones claras y concisas, siempre de forma profesional y c
     const data = await response.json();
     const reply = data?.candidates?.[0]?.content?.[0]?.text || "Lo siento, no pude generar una recomendación.";
     res.json({ reply });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ reply: "Error al comunicarse con Gemini." });
   }
 });
 
-// 🔹 Exponer widget.js como recurso estático
-app.use(express.static(__dirname)); // ahora cualquier archivo en la raíz se puede acceder vía URL
+// 🔹 Servir archivos estáticos (widget.js)
+app.use(express.static(__dirname)); // cualquier archivo en la raíz, incluido widget.js
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor Gemini activo en puerto ${PORT}`));
