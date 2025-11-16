@@ -71,7 +71,14 @@ Responde con recomendaciones claras y concisas, siempre de forma profesional y c
 });
 
 // 🔹 Servir archivos estáticos (widget.js)
-app.use(express.static(__dirname)); // cualquier archivo en la raíz, incluido widget.js
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(__dirname)); // ahora funciona en ES Modules
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor Gemini activo en puerto ${PORT}`));
+
