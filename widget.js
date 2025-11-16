@@ -183,6 +183,3 @@ Estaré encantado de orientarte con la propuesta más adecuada.
         input.value = "";
     });
 })();
-
-
-
