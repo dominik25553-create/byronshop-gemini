@@ -1,14 +1,14 @@
 // --------------------
-// ASISTENTE BYRONSHOP (SIMULACIÓN SIN API)
+// ASISTENTE OMEGASV (SIMULACIÓN SIN API)
 // --------------------
 
 (function () {
-    // Crear el contenedor flotante
+    // Crear contenedor flotante
     const widget = document.createElement("div");
-    widget.id = "byronshop-assistant";
+    widget.id = "omegasv-assistant";
     widget.innerHTML = `
         <style>
-            #byronshop-assistant {
+            #omegasv-assistant {
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
@@ -22,7 +22,7 @@
                 font-family: Arial, sans-serif;
                 z-index: 99999;
             }
-            #bsa-header {
+            #os-header {
                 background: #002b5c;
                 color: white;
                 padding: 12px;
@@ -30,24 +30,24 @@
                 text-align: center;
                 border-radius: 12px 12px 0 0;
             }
-            #bsa-messages {
+            #os-messages {
                 flex: 1;
                 padding: 10px;
                 overflow-y: auto;
                 font-size: 14px;
             }
-            #bsa-input-section {
+            #os-input-section {
                 display: flex;
                 border-top: 1px solid #ccc;
             }
-            #bsa-input {
+            #os-input {
                 flex: 1;
                 border: none;
                 padding: 10px;
                 font-size: 14px;
                 outline: none;
             }
-            #bsa-send {
+            #os-send {
                 width: 70px;
                 background: #002b5c;
                 color: white;
@@ -56,11 +56,11 @@
             }
         </style>
 
-        <div id="bsa-header">Asistente ByronShop</div>
-        <div id="bsa-messages"></div>
-        <div id="bsa-input-section">
-            <input id="bsa-input" placeholder="Escribe tu consulta..." />
-            <button id="bsa-send">Enviar</button>
+        <div id="os-header">Asistente OmegaSV</div>
+        <div id="os-messages"></div>
+        <div id="os-input-section">
+            <input id="os-input" placeholder="Escribe tu consulta..." />
+            <button id="os-send">Enviar</button>
         </div>
     `;
 
@@ -68,7 +68,7 @@
 
     // Función para agregar mensajes
     function addMessage(sender, text) {
-        const msgBox = document.getElementById("bsa-messages");
+        const msgBox = document.getElementById("os-messages");
         const bubble = document.createElement("div");
         bubble.style.margin = "8px 0";
 
@@ -91,16 +91,17 @@
     function generarRespuestaSimulada(mensaje) {
         const mensajeMin = mensaje.toLowerCase();
 
+        // Catálogo
         const productos = {
             web: {
                 nombre: "Paquete Web Pro",
-                precio: 1356,
-                desc: "Desarrollo web profesional, ideal para empresas que buscan presencia sólida."
+                precio: 1356.00,
+                desc: "Sitios web profesionales adaptados a tu negocio."
             },
             apps: {
                 nombre: "Aplicaciones Innovadoras",
                 precio: 111.87,
-                desc: "Apps dinámicas y modernas para emprendimientos digitales."
+                desc: "Apps innovadoras para startups y negocios digitales."
             },
             prod: {
                 nombre: "Productos Digitales",
@@ -110,55 +111,55 @@
             serv: {
                 nombre: "Servicios Digitales",
                 precio: 111.87,
-                desc: "Servicios especializados para optimizar tu presencia digital."
+                desc: "Servicios digitales para mejorar tu presencia online."
             }
         };
 
-        // Por necesidades clave
-        if (mensajeMin.includes("web") || mensajeMin.includes("página") || mensajeMin.includes("sitio")) {
+        // Recomendar según necesidad
+        if (mensajeMin.includes("web") || mensajeMin.includes("sitio") || mensajeMin.includes("página")) {
             return `
 Recomendación profesional:
 
-Con base en tu necesidad orientada al desarrollo web, el paquete ideal es el **Paquete Web Pro ($1356.00)**.  
-Incluye una solución profesional y escalable diseñada para negocios que necesitan presencia digital sólida.
+Con base en tu necesidad de desarrollo web, el paquete ideal es **${productos.web.nombre} ($${productos.web.precio})**.  
+${productos.web.desc}
             `;
         }
 
-        if (mensajeMin.includes("app") || mensajeMin.includes("aplicación") || mensajeMin.includes("movil")) {
+        if (mensajeMin.includes("app") || mensajeMin.includes("aplicación") || mensajeMin.includes("móvil")) {
             return `
 Recomendación profesional:
 
-Considerando tu interés en soluciones móviles o de software, te sugiero **Aplicaciones Innovadoras ($111.87)**.  
-Es un paquete diseñado para proyectos ágiles y modernos.
+Considerando tu interés en aplicaciones, sugerimos **${productos.apps.nombre} ($${productos.apps.precio})**.  
+${productos.apps.desc}
             `;
         }
 
-        // Por presupuesto
+        // Presupuesto limitado
         if (mensajeMin.includes("barato") || mensajeMin.includes("económico") || mensajeMin.includes("presupuesto") || mensajeMin.includes("111")) {
             return `
 Recomendación profesional:
 
 Según tu presupuesto, las opciones más adecuadas son:
 
-• **Aplicaciones Innovadoras — $111.87**  
-• **Productos Digitales — $111.87**  
-• **Servicios Digitales — $111.87**
+• **${productos.apps.nombre} — $${productos.apps.precio}**  
+• **${productos.prod.nombre} — $${productos.prod.precio}**  
+• **${productos.serv.nombre} — $${productos.serv.precio}**
 
-Son alternativas accesibles que mantienen un enfoque corporativo y funcional.
+Todas mantienen un enfoque corporativo y profesional.
             `;
         }
 
-        // Genérica profesional
+        // Respuesta genérica
         return `
 Gracias por tu consulta.
 
-Para poder brindarte una recomendación precisa y corporativa, por favor indícame:
+Para ofrecer la mejor recomendación profesional de OmegaSV, por favor indica:
 
 • Tu necesidad principal  
-• El presupuesto disponible  
-• El tipo de solución que buscas  
+• Presupuesto aproximado  
+• Tipo de solución deseada
 
-Estaré encantado de orientarte con la mejor propuesta de ByronShop.
+Estaré encantado de orientarte con la propuesta más adecuada.
         `;
     }
 
@@ -166,8 +167,8 @@ Estaré encantado de orientarte con la mejor propuesta de ByronShop.
     // EVENTO DE ENVÍO
     // --------------------
 
-    document.getElementById("bsa-send").addEventListener("click", () => {
-        const input = document.getElementById("bsa-input");
+    document.getElementById("os-send").addEventListener("click", () => {
+        const input = document.getElementById("os-input");
         const texto = input.value.trim();
         if (!texto) return;
 
@@ -182,5 +183,6 @@ Estaré encantado de orientarte con la mejor propuesta de ByronShop.
         input.value = "";
     });
 })();
+
 
 
